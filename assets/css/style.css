@@ -19,6 +19,8 @@ main {
 h1 {
     margin: 0;
     padding: 25px;
+    font-size: 100px;
+    color: darkorange;
 }
 
 /* Controls and Message Styles */
