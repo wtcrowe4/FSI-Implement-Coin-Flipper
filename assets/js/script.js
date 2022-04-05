@@ -2,6 +2,35 @@
 let headFlips = 0;
 let tailFlips = 0;
 
+ // TODO: Calculate the total number of rolls/flips
+ function scoreTable() {
+    let totalFlips = headFlips + tailFlips
+    // Make variables to track the percentages of heads and tails
+    let percentHeads = 0
+    let percentTails = 0
+    //calculating percentages
+    if (totalFlips > 0) {
+        percentHeads = Math.round((headFlips / totalFlips) * 100)
+        percentTails = Math.round((tailFlips / totalFlips) * 100)
+    }
+    //update scoreboard
+    document.getElementById('heads').textContent = headFlips
+    document.getElementById('heads-percent').textContent = percentHeads + '%'
+    document.getElementById('tails').textContent = tailFlips
+    document.getElementById('tails-percent').textContent = percentTails + '%'
+}
+
+//accessing local storage on page load
+if (localStorage.getItem('headFlips') !== null){
+    headFlips = parseInt(localStorage.getItem('headFlips'));
+    scoreTable()
+}
+if (localStorage.getItem('tailFlips') !== null){
+    tailFlips = parseInt(localStorage.getItem('tailFlips'));
+    scoreTable()
+}
+
+
 document.addEventListener('DOMContentLoaded', function () {
     // TODO: Add event listener and handler for flip and clear buttons
     // Flip Button Click Handler
@@ -21,29 +50,23 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('message').textContent = 'You flipped Heads.'
             //heads counter
             headFlips += 1
+            scoreTable();
         }
         else {
             //display for tails
             document.getElementById('penny-picture').src ='assets/images/penny-tails.jpg'
             document.getElementById('message').textContent = 'You flipped Tails.'
             //tails counter
-            tailFlips += 1
+            tailFlips += 1;
+            scoreTable();
         }
-        // TODO: Calculate the total number of rolls/flips
-        let totalFlips = headFlips + tailFlips
-        // Make variables to track the percentages of heads and tails
-        let percentHeads = 0
-        let percentTails = 0
-        //calculating percentages
-        if (totalFlips > 0) {
-            percentHeads = Math.round((headFlips / totalFlips) * 100)
-            percentTails = Math.round((tailFlips / totalFlips) * 100)
-        }
-        //update scoreboard
-        document.getElementById('heads').textContent = headFlips
-        document.getElementById('heads-percent').textContent = percentHeads + '%'
-        document.getElementById('tails').textContent = tailFlips
-        document.getElementById('tails-percent').textContent = percentTails + '%'
+       
+        //adding local storage 
+        localStorage.setItem('headFlips', headFlips)
+        localStorage.setItem('tailFlips', tailFlips)
+       
+       
+       
     })
     //Clear Button Click Handler
     // TODO: Reset global variables to 0
@@ -67,5 +90,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('heads-percent').textContent = percentHeads + '%'
         document.getElementById('tails').textContent = tailFlips
         document.getElementById('tails-percent').textContent = percentTails + '%'
+    
+    //updating local storage after clearing
+        localStorage.setItem('headFlips', headFlips)
+        localStorage.setItem('tailFlips', tailFlips)
     })
 })
